@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="63d33a4aa3b34822b2aca2de348223de" Name="Diagram1">
+        <EntityTypeShape EntityType="telecom_loskModel.Employee" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="telecom_loskModel.Equipment" Width="1.5" PointX="8.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="telecom_loskModel.Gender" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="telecom_loskModel.Installations" Width="1.5" PointX="11" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="telecom_loskModel.Job_title" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="telecom_loskModel.Payments" Width="1.5" PointX="6" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="telecom_loskModel.ServiceRequests" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="telecom_loskModel.Services" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="telecom_loskModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="telecom_loskModel.TaxReporting" Width="1.5" PointX="3.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="telecom_loskModel.User" Width="1.5" PointX="8.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="telecom_loskModel.ServiceStats" Width="1.5" PointX="11" PointY="12.125" IsExpanded="true" />
+        <AssociationConnector Association="telecom_loskModel.FK_Employee_Gender" ManuallyRouted="false" />
+        <AssociationConnector Association="telecom_loskModel.FK_Employee_Job_title" ManuallyRouted="false" />
+        <AssociationConnector Association="telecom_loskModel.FK_ServiceRequests_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="telecom_loskModel.FK_User_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="telecom_loskModel.FK_Installations_Equipment" ManuallyRouted="false" />
+        <AssociationConnector Association="telecom_loskModel.FK_ServiceStats_Equipment1" ManuallyRouted="false" />
+        <AssociationConnector Association="telecom_loskModel.FK_Installations_TaxReporting" ManuallyRouted="false" />
+        <AssociationConnector Association="telecom_loskModel.FK_Payments_TaxReporting" ManuallyRouted="false" />
+        <AssociationConnector Association="telecom_loskModel.FK_User_Payments" ManuallyRouted="false" />
+        <AssociationConnector Association="telecom_loskModel.FK_ServiceRequests_Services" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

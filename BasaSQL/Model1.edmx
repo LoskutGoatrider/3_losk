@@ -1,0 +1,773 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище telecom_loskModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="First_name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Last_name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Midle_name" Type="varchar" MaxLength="20" />
+          <Property Name="Born_date" Type="date" Nullable="false" />
+          <Property Name="Gender" Type="int" Nullable="false" />
+          <Property Name="Position_at_work" Type="int" Nullable="false" />
+          <Property Name="Wages" Type="money" Nullable="false" />
+          <Property Name="Passport_serial" Type="numeric" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="Passport_number" Type="numeric" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="Registration" Type="varchar(max)" Nullable="false" />
+          <Property Name="Email" Type="varchar(max)" />
+          <Property Name="Phone" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Equipment">
+          <Key>
+            <PropertyRef Name="EquipmentID" />
+          </Key>
+          <Property Name="EquipmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EquipmentName" Type="varchar" MaxLength="100" />
+          <Property Name="InstallationCost" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="GenderID" />
+          </Key>
+          <Property Name="GenderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Installations">
+          <Key>
+            <PropertyRef Name="InstallationID" />
+          </Key>
+          <Property Name="InstallationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EquipmentID" Type="int" />
+          <Property Name="InstallationDate" Type="datetime" Nullable="false" />
+          <Property Name="ReportID" Type="int" />
+        </EntityType>
+        <EntityType Name="Job_title">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="PaymentID" />
+          </Key>
+          <Property Name="PaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="PaymentDate" Type="datetime" Nullable="false" />
+          <Property Name="ReportID" Type="int" />
+        </EntityType>
+        <EntityType Name="ServiceRequests">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="int" Nullable="false" />
+          <Property Name="ServiceID" Type="int" />
+          <Property Name="EmployeeID" Type="int" />
+          <Property Name="RequestDate" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Services">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="int" Nullable="false" />
+          <Property Name="ServiceName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "telecom_losk.dbo.ServiceStats" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="ServiceStats">
+          <Key>
+            <PropertyRef Name="StatID" />
+            <PropertyRef Name="TotalInstalled" />
+            <PropertyRef Name="TotalRevenue" />
+          </Key>
+          <Property Name="StatID" Type="int" Nullable="false" />
+          <Property Name="EquipmentID" Type="int" />
+          <Property Name="TotalInstalled" Type="int" Nullable="false" />
+          <Property Name="TotalRevenue" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TaxReporting">
+          <Key>
+            <PropertyRef Name="ReportID" />
+          </Key>
+          <Property Name="ReportID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="ReportDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" />
+          <Property Name="PaymentID" Type="int" />
+        </EntityType>
+        <Association Name="FK_Employee_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="GenderID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Gender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Job_title">
+          <End Role="Job_title" Type="Self.Job_title" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job_title">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Position_at_work" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Installations_Equipment">
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
+          <End Role="Installations" Type="Self.Installations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipment">
+              <PropertyRef Name="EquipmentID" />
+            </Principal>
+            <Dependent Role="Installations">
+              <PropertyRef Name="EquipmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Installations_TaxReporting">
+          <End Role="TaxReporting" Type="Self.TaxReporting" Multiplicity="0..1" />
+          <End Role="Installations" Type="Self.Installations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxReporting">
+              <PropertyRef Name="ReportID" />
+            </Principal>
+            <Dependent Role="Installations">
+              <PropertyRef Name="ReportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_TaxReporting">
+          <End Role="TaxReporting" Type="Self.TaxReporting" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxReporting">
+              <PropertyRef Name="ReportID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="ReportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequests_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="ServiceRequests" Type="Self.ServiceRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ServiceRequests">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequests_Services">
+          <End Role="Services" Type="Self.Services" Multiplicity="0..1" />
+          <End Role="ServiceRequests" Type="Self.ServiceRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ServiceID" />
+            </Principal>
+            <Dependent Role="ServiceRequests">
+              <PropertyRef Name="ServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceStats_Equipment1">
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
+          <End Role="ServiceStats" Type="Self.ServiceStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipment">
+              <PropertyRef Name="EquipmentID" />
+            </Principal>
+            <Dependent Role="ServiceStats">
+              <PropertyRef Name="EquipmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Payments">
+          <End Role="Payments" Type="Self.Payments" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payments">
+              <PropertyRef Name="PaymentID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="PaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище telecom_loskModelContainer">
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Equipment" EntityType="Self.Equipment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Installations" EntityType="Self.Installations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Job_title" EntityType="Self.Job_title" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceRequests" EntityType="Self.ServiceRequests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaxReporting" EntityType="Self.TaxReporting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ServiceStats" EntityType="Self.ServiceStats" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ServiceStats].[StatID] AS [StatID], 
+    [ServiceStats].[EquipmentID] AS [EquipmentID], 
+    [ServiceStats].[TotalInstalled] AS [TotalInstalled], 
+    [ServiceStats].[TotalRevenue] AS [TotalRevenue]
+    FROM [dbo].[ServiceStats] AS [ServiceStats]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Employee_Gender" Association="Self.FK_Employee_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Job_title" Association="Self.FK_Employee_Job_title">
+            <End Role="Job_title" EntitySet="Job_title" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Installations_Equipment" Association="Self.FK_Installations_Equipment">
+            <End Role="Equipment" EntitySet="Equipment" />
+            <End Role="Installations" EntitySet="Installations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Installations_TaxReporting" Association="Self.FK_Installations_TaxReporting">
+            <End Role="TaxReporting" EntitySet="TaxReporting" />
+            <End Role="Installations" EntitySet="Installations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_TaxReporting" Association="Self.FK_Payments_TaxReporting">
+            <End Role="TaxReporting" EntitySet="TaxReporting" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequests_Employee" Association="Self.FK_ServiceRequests_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="ServiceRequests" EntitySet="ServiceRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequests_Services" Association="Self.FK_ServiceRequests_Services">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="ServiceRequests" EntitySet="ServiceRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceStats_Equipment1" Association="Self.FK_ServiceStats_Equipment1">
+            <End Role="Equipment" EntitySet="Equipment" />
+            <End Role="ServiceStats" EntitySet="ServiceStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Employee" Association="Self.FK_User_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Payments" Association="Self.FK_User_Payments">
+            <End Role="Payments" EntitySet="Payments" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="telecom_loskModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="First_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Last_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Midle_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Born_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Gender" Type="Int32" Nullable="false" />
+          <Property Name="Position_at_work" Type="Int32" Nullable="false" />
+          <Property Name="Wages" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Passport_serial" Type="Decimal" Precision="4" Scale="0" Nullable="false" />
+          <Property Name="Passport_number" Type="Decimal" Precision="6" Scale="0" Nullable="false" />
+          <Property Name="Registration" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Gender1" Relationship="Self.FK_Employee_Gender" FromRole="Employee" ToRole="Gender" />
+          <NavigationProperty Name="Job_title" Relationship="Self.FK_Employee_Job_title" FromRole="Employee" ToRole="Job_title" />
+          <NavigationProperty Name="ServiceRequests" Relationship="Self.FK_ServiceRequests_Employee" FromRole="Employee" ToRole="ServiceRequests" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Employee" FromRole="Employee" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Equipment">
+          <Key>
+            <PropertyRef Name="EquipmentID" />
+          </Key>
+          <Property Name="EquipmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EquipmentName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="InstallationCost" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="Installations" Relationship="Self.FK_Installations_Equipment" FromRole="Equipment" ToRole="Installations" />
+          <NavigationProperty Name="ServiceStats" Relationship="Self.FK_ServiceStats_Equipment1" FromRole="Equipment" ToRole="ServiceStats" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="GenderID" />
+          </Key>
+          <Property Name="GenderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="1" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Gender" FromRole="Gender" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Installations">
+          <Key>
+            <PropertyRef Name="InstallationID" />
+          </Key>
+          <Property Name="InstallationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EquipmentID" Type="Int32" />
+          <Property Name="InstallationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReportID" Type="Int32" />
+          <NavigationProperty Name="Equipment" Relationship="Self.FK_Installations_Equipment" FromRole="Installations" ToRole="Equipment" />
+          <NavigationProperty Name="TaxReporting" Relationship="Self.FK_Installations_TaxReporting" FromRole="Installations" ToRole="TaxReporting" />
+        </EntityType>
+        <EntityType Name="Job_title">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Job_title" FromRole="Job_title" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="PaymentID" />
+          </Key>
+          <Property Name="PaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Amount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReportID" Type="Int32" />
+          <NavigationProperty Name="TaxReporting" Relationship="Self.FK_Payments_TaxReporting" FromRole="Payments" ToRole="TaxReporting" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Payments" FromRole="Payments" ToRole="User" />
+        </EntityType>
+        <EntityType Name="ServiceRequests">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="Int32" Nullable="false" />
+          <Property Name="ServiceID" Type="Int32" />
+          <Property Name="EmployeeID" Type="Int32" />
+          <Property Name="RequestDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_ServiceRequests_Employee" FromRole="ServiceRequests" ToRole="Employee" />
+          <NavigationProperty Name="Services" Relationship="Self.FK_ServiceRequests_Services" FromRole="ServiceRequests" ToRole="Services" />
+        </EntityType>
+        <EntityType Name="Services">
+          <Key>
+            <PropertyRef Name="ServiceID" />
+          </Key>
+          <Property Name="ServiceID" Type="Int32" Nullable="false" />
+          <Property Name="ServiceName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="ServiceRequests" Relationship="Self.FK_ServiceRequests_Services" FromRole="Services" ToRole="ServiceRequests" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TaxReporting">
+          <Key>
+            <PropertyRef Name="ReportID" />
+          </Key>
+          <Property Name="ReportID" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="ReportDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Installations" Relationship="Self.FK_Installations_TaxReporting" FromRole="TaxReporting" ToRole="Installations" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_Payments_TaxReporting" FromRole="TaxReporting" ToRole="Payments" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmployeeID" Type="Int32" />
+          <Property Name="PaymentID" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_User_Employee" FromRole="User" ToRole="Employee" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_User_Payments" FromRole="User" ToRole="Payments" />
+        </EntityType>
+        <EntityType Name="ServiceStats">
+          <Key>
+            <PropertyRef Name="StatID" />
+            <PropertyRef Name="TotalInstalled" />
+            <PropertyRef Name="TotalRevenue" />
+          </Key>
+          <Property Name="StatID" Type="Int32" Nullable="false" />
+          <Property Name="EquipmentID" Type="Int32" />
+          <Property Name="TotalInstalled" Type="Int32" Nullable="false" />
+          <Property Name="TotalRevenue" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Equipment" Relationship="Self.FK_ServiceStats_Equipment1" FromRole="ServiceStats" ToRole="Equipment" />
+        </EntityType>
+        <Association Name="FK_Employee_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="GenderID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Gender" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Job_title">
+          <End Role="Job_title" Type="Self.Job_title" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Job_title">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Position_at_work" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequests_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="ServiceRequests" Type="Self.ServiceRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ServiceRequests">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Installations_Equipment">
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
+          <End Role="Installations" Type="Self.Installations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipment">
+              <PropertyRef Name="EquipmentID" />
+            </Principal>
+            <Dependent Role="Installations">
+              <PropertyRef Name="EquipmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceStats_Equipment1">
+          <End Role="Equipment" Type="Self.Equipment" Multiplicity="0..1" />
+          <End Role="ServiceStats" Type="Self.ServiceStats" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipment">
+              <PropertyRef Name="EquipmentID" />
+            </Principal>
+            <Dependent Role="ServiceStats">
+              <PropertyRef Name="EquipmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Installations_TaxReporting">
+          <End Role="TaxReporting" Type="Self.TaxReporting" Multiplicity="0..1" />
+          <End Role="Installations" Type="Self.Installations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxReporting">
+              <PropertyRef Name="ReportID" />
+            </Principal>
+            <Dependent Role="Installations">
+              <PropertyRef Name="ReportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_TaxReporting">
+          <End Role="TaxReporting" Type="Self.TaxReporting" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaxReporting">
+              <PropertyRef Name="ReportID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="ReportID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Payments">
+          <End Role="Payments" Type="Self.Payments" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payments">
+              <PropertyRef Name="PaymentID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="PaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ServiceRequests_Services">
+          <End Role="Services" Type="Self.Services" Multiplicity="0..1" />
+          <End Role="ServiceRequests" Type="Self.ServiceRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services">
+              <PropertyRef Name="ServiceID" />
+            </Principal>
+            <Dependent Role="ServiceRequests">
+              <PropertyRef Name="ServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="telecom_loskEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="Equipment" EntityType="Self.Equipment" />
+          <EntitySet Name="Gender" EntityType="Self.Gender" />
+          <EntitySet Name="Installations" EntityType="Self.Installations" />
+          <EntitySet Name="Job_title" EntityType="Self.Job_title" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" />
+          <EntitySet Name="ServiceRequests" EntityType="Self.ServiceRequests" />
+          <EntitySet Name="Services" EntityType="Self.Services" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="TaxReporting" EntityType="Self.TaxReporting" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="ServiceStats" EntityType="Self.ServiceStats" />
+          <AssociationSet Name="FK_Employee_Gender" Association="Self.FK_Employee_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Job_title" Association="Self.FK_Employee_Job_title">
+            <End Role="Job_title" EntitySet="Job_title" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequests_Employee" Association="Self.FK_ServiceRequests_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="ServiceRequests" EntitySet="ServiceRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Employee" Association="Self.FK_User_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Installations_Equipment" Association="Self.FK_Installations_Equipment">
+            <End Role="Equipment" EntitySet="Equipment" />
+            <End Role="Installations" EntitySet="Installations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceStats_Equipment1" Association="Self.FK_ServiceStats_Equipment1">
+            <End Role="Equipment" EntitySet="Equipment" />
+            <End Role="ServiceStats" EntitySet="ServiceStats" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Installations_TaxReporting" Association="Self.FK_Installations_TaxReporting">
+            <End Role="TaxReporting" EntitySet="TaxReporting" />
+            <End Role="Installations" EntitySet="Installations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_TaxReporting" Association="Self.FK_Payments_TaxReporting">
+            <End Role="TaxReporting" EntitySet="TaxReporting" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Payments" Association="Self.FK_User_Payments">
+            <End Role="Payments" EntitySet="Payments" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ServiceRequests_Services" Association="Self.FK_ServiceRequests_Services">
+            <End Role="Services" EntitySet="Services" />
+            <End Role="ServiceRequests" EntitySet="ServiceRequests" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище telecom_loskModelContainer" CdmEntityContainer="telecom_loskEntities">
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="telecom_loskModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="First_name" ColumnName="First_name" />
+                <ScalarProperty Name="Last_name" ColumnName="Last_name" />
+                <ScalarProperty Name="Midle_name" ColumnName="Midle_name" />
+                <ScalarProperty Name="Born_date" ColumnName="Born_date" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Position_at_work" ColumnName="Position_at_work" />
+                <ScalarProperty Name="Wages" ColumnName="Wages" />
+                <ScalarProperty Name="Passport_serial" ColumnName="Passport_serial" />
+                <ScalarProperty Name="Passport_number" ColumnName="Passport_number" />
+                <ScalarProperty Name="Registration" ColumnName="Registration" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Equipment">
+            <EntityTypeMapping TypeName="telecom_loskModel.Equipment">
+              <MappingFragment StoreEntitySet="Equipment">
+                <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
+                <ScalarProperty Name="EquipmentName" ColumnName="EquipmentName" />
+                <ScalarProperty Name="InstallationCost" ColumnName="InstallationCost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Gender">
+            <EntityTypeMapping TypeName="telecom_loskModel.Gender">
+              <MappingFragment StoreEntitySet="Gender">
+                <ScalarProperty Name="GenderID" ColumnName="GenderID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Installations">
+            <EntityTypeMapping TypeName="telecom_loskModel.Installations">
+              <MappingFragment StoreEntitySet="Installations">
+                <ScalarProperty Name="InstallationID" ColumnName="InstallationID" />
+                <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
+                <ScalarProperty Name="InstallationDate" ColumnName="InstallationDate" />
+                <ScalarProperty Name="ReportID" ColumnName="ReportID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Job_title">
+            <EntityTypeMapping TypeName="telecom_loskModel.Job_title">
+              <MappingFragment StoreEntitySet="Job_title">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="telecom_loskModel.Payments">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="ReportID" ColumnName="ReportID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceRequests">
+            <EntityTypeMapping TypeName="telecom_loskModel.ServiceRequests">
+              <MappingFragment StoreEntitySet="ServiceRequests">
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="telecom_loskModel.Services">
+              <MappingFragment StoreEntitySet="Services">
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="telecom_loskModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaxReporting">
+            <EntityTypeMapping TypeName="telecom_loskModel.TaxReporting">
+              <MappingFragment StoreEntitySet="TaxReporting">
+                <ScalarProperty Name="ReportID" ColumnName="ReportID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="ReportDate" ColumnName="ReportDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="telecom_loskModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ServiceStats">
+            <EntityTypeMapping TypeName="telecom_loskModel.ServiceStats">
+              <MappingFragment StoreEntitySet="ServiceStats">
+                <ScalarProperty Name="StatID" ColumnName="StatID" />
+                <ScalarProperty Name="EquipmentID" ColumnName="EquipmentID" />
+                <ScalarProperty Name="TotalInstalled" ColumnName="TotalInstalled" />
+                <ScalarProperty Name="TotalRevenue" ColumnName="TotalRevenue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
