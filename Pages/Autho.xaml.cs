@@ -67,7 +67,7 @@ namespace losk_3.Pages
                         telecom_loskEntities db = Helper.GetContext();
 
                         var user = db.User.Where(x => x.Login == login && x.Password == hashPassw).FirstOrDefault();
-                        if (click == 1)
+                        if (click == 1)  // Если это первое нажатие на кнопку входа
                         {
                                 if (!IsAccessAllowed())
                                 {
@@ -99,7 +99,7 @@ namespace losk_3.Pages
                         {
                                 if (click == 3)
                                 {
-                                        BlockControls();
+                                        BlockControls(); // Блокируем элементы управления, чтобы предотвратить взаимодействие пользователя до завершения операции
 
                                         remainingTime = 10;
                                         txtbTimer.Visibility = Visibility.Visible;
@@ -108,10 +108,10 @@ namespace losk_3.Pages
 
                                 if (user != null && tbCaptcha.Text == tblCaptcha.Text)
                                 {
-                                        txtbLogin.Clear();
-                                        pswbPassword.Clear();
-                                        tblCaptcha.Text = "Text";
-                                        tbCaptcha.Text = "";
+                                        txtbLogin.Clear();// Очищаем текстовое поле для логина
+                                        pswbPassword.Clear();// Очищаем поле для ввода пароля
+                                        tblCaptcha.Text = "Text";// Сбрасываем текст капчи на значение "Text"
+                                        tbCaptcha.Text = "";// Очищаем текстовое поле, связанное с капчей
                                         tbCaptcha.Visibility = Visibility.Hidden;
                                         tblCaptcha.Visibility = Visibility.Hidden;
                                         MessageBox.Show(GreetUser(user));
@@ -173,7 +173,7 @@ namespace losk_3.Pages
                         if (remainingTime <= 0)
                         {
                                 timer.Stop();
-                                UnlockControls();
+                                UnlockControls();// Разблокируем элементы управления, чтобы пользователь мог взаимодействовать с интерфейсом после завершения операции
                                 txtbTimer.Visibility = Visibility.Hidden;
                                 return;
                         }

@@ -15,7 +15,7 @@ namespace losk_3.Services
                 {
                         try
                         {
-                                MailAddress from = new MailAddress("accelerator697@mail.ru", "John Wick");
+                                MailAddress from = new MailAddress("accelerator697@mail.ru", "Loskut");
                                 MailAddress to = new MailAddress(email);
                                 MailMessage message = new MailMessage(from, to);
                                 message.Subject = "Код подтверждения";

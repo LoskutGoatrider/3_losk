@@ -34,31 +34,33 @@ namespace losk_3.Pages
                 public Authenication(User user, string idPositionAtWork)
                 {
                         InitializeComponent();
-                        CreateTimer();
+                        CreateTimer();// Создаем и настраиваем таймер для выполнения определенных задач
                         _user = user;
                         _positionAtWork = idPositionAtWork;
                         _email = user.Employee.Email;
                 }
 
-                private void CreateTimer()
+                private void CreateTimer() // Метод для создания и настройки таймера
                 {
-                        timer = new DispatcherTimer();
-                        timer.Interval = TimeSpan.FromSeconds(1);
-                        timer.Tick += Timer_Tick;
+                        timer = new DispatcherTimer();// Инициализируем новый экземпляр таймера
+                        timer.Interval = TimeSpan.FromSeconds(1);// Устанавливаем интервал таймера на 1 секунду
+                        timer.Tick += Timer_Tick;// Подписываемся на событие Tick таймера для обработки
                 }
 
+                // Обработчик события Tick таймера
                 private void Timer_Tick(object sender, EventArgs e)
                 {
-                        remainingTime--;
+                        remainingTime--;// Уменьшаем оставшееся время на 1 секунду
 
+                        // Проверяем, истекло ли время
                         if (remainingTime <= 0)
                         {
-                                timer.Stop();
-                                btnSend.IsEnabled = true;
-                                txtbTimer.Visibility = Visibility.Hidden;
-                                return;
+                                timer.Stop();// Останавливаем таймер
+                                btnSend.IsEnabled = true;// Активируем кнопку отправки
+                                txtbTimer.Visibility = Visibility.Hidden;// Скрываем текстовое поле с таймером
+                                return;// Завершаем выполнение метода
                         }
-
+                        // Обновляем текстовое поле с оставшимся временем до повторной отправки кода
                         txtbTimer.Text = $"Отправить код повторно \nчерез: {remainingTime} секунд";
                 }
 
@@ -72,14 +74,18 @@ namespace losk_3.Pages
 
                 private void btnSend_Click(object sender, RoutedEventArgs e)
                 {
+                        // Проверяем, что адрес электронной почты сотрудника не равен null
                         if (_email != null)
                         {
+                                // Создаем экземпляр класса ConfirmationCode для отправки кода подтверждения
                                 ConfirmationCode confCode = new ConfirmationCode();
+                                // Отправляем код подтверждения на электронную почту и сохраняем его в переменную
                                 _confirmationCode = confCode.SendEmail(_email);
+                                // Деактивируем кнопку отправки, чтобы предотвратить повторные нажатия
                                 btnSend.IsEnabled = false;
-                                remainingTime = 60;
-                                txtbTimer.Visibility = Visibility.Visible;
-                                timer.Start();
+                                remainingTime = 60;// Устанавливаем оставшееся время в 60 секунд
+                                txtbTimer.Visibility = Visibility.Visible;// Показываем текстовое поле таймера
+                                timer.Start();// Запускаем таймер
                         }
                         else
                         {

@@ -81,12 +81,14 @@ namespace losk_3.Pages
                         FilterEmployees();
                 }
 
-                private void FilterEmployees()
+                private void FilterEmployees()  // Метод для фильтрации сотрудников
                 {
-                        string searchText = tbSearch.Text.ToLower();
-                        string selectedJobTitle = cbJobTitle.SelectedItem as string;
+                        string searchText = tbSearch.Text.ToLower(); // Получаем текст из поля поиска и преобразуем его в нижний регистр
+                        string selectedJobTitle = cbJobTitle.SelectedItem as string; // Получаем выбранное значение должности из комбобокса
 
+                        // Фильтрация списка сотрудников на основе текста поиска и выбранной должности
                         _filteredEmployees = _employees.Where(emp =>
+                            // Проверяем, содержится ли полное имя сотрудника (фамилия, имя и отчество) в тексте поиска
                             (emp.LastName + " " + emp.FirstName + " " + emp.MiddleName).ToLower().Contains(searchText) &&
                             (selectedJobTitle == "Все должности" || emp.PositionAtWork == selectedJobTitle))
                             .ToList();
