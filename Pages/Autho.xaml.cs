@@ -21,7 +21,7 @@ using System.Windows.Threading;
 namespace losk_3.Pages
 {
         /// <summary>
-        /// Логика взаимодействия для Autho.xaml
+        /// Этот код реализует страницу входа в систему с капчей и ограничением по времени доступа. 
         /// </summary>
         public partial class Autho : Page
         {
@@ -99,7 +99,7 @@ namespace losk_3.Pages
                         {
                                 if (click == 3)
                                 {
-                                        BlockControls(); // Блокируем элементы управления, чтобы предотвратить взаимодействие пользователя до завершения операции
+                                        BlockControls(); 
 
                                         remainingTime = 10;
                                         txtbTimer.Visibility = Visibility.Visible;
@@ -108,8 +108,8 @@ namespace losk_3.Pages
 
                                 if (user != null && tbCaptcha.Text == tblCaptcha.Text)
                                 {
-                                        txtbLogin.Clear();// Очищаем текстовое поле для логина
-                                        pswbPassword.Clear();// Очищаем поле для ввода пароля
+                                        txtbLogin.Clear();
+                                        pswbPassword.Clear();
                                         tblCaptcha.Text = "Text";// Сбрасываем текст капчи на значение "Text"
                                         tbCaptcha.Text = "";// Очищаем текстовое поле, связанное с капчей
                                         tbCaptcha.Visibility = Visibility.Hidden;
@@ -173,7 +173,7 @@ namespace losk_3.Pages
                         if (remainingTime <= 0)
                         {
                                 timer.Stop();
-                                UnlockControls();// Разблокируем элементы управления, чтобы пользователь мог взаимодействовать с интерфейсом после завершения операции
+                                UnlockControls();// Разблокируем элементы управления
                                 txtbTimer.Visibility = Visibility.Hidden;
                                 return;
                         }

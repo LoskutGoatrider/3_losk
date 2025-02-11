@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 namespace losk_3.Pages
 {
         /// <summary>
-        /// Логика взаимодействия для AddEmployee.xaml
+        ///  Реализует добавление нового сотрудника (newEmployee) в базу данных и обработку возможных ошибок.
         /// </summary>
         public partial class AddEmployee : Page
         {
@@ -27,7 +27,6 @@ namespace losk_3.Pages
                         InitializeComponent();
                         LoadComboBoxes();
                 }
-
                 private void LoadComboBoxes()
                 {
                         telecom_loskEntities db = Helper.GetContext();
@@ -57,7 +56,11 @@ namespace losk_3.Pages
                                 }
                         
                 }
-
+                /// <summary>
+                /// Обработчик события нажатия кнопки "Добавить", добавляет нового сотрудника в базу данных.
+                /// </summary>
+                /// <param name="sender">Объект, вызвавший событие (кнопка).</param>
+                /// <param name="e">Аргументы события, содержащие информацию о событии.</param>
                 private void AddButton_Click(object sender, RoutedEventArgs e)
                 {
 

@@ -18,11 +18,11 @@ using losk_3.Services;
 namespace losk_3.Pages
 {
         /// <summary>
-        /// Логика взаимодействия для Client.xaml
+        /// Этот код предоставляет базовую функциональность для просмотра и фильтрации списка сотрудников.
         /// </summary>
-       
-        
-                public partial class Client : Page
+
+
+        public partial class Client : Page
                 {
                 private List<Employees> _employees;
                 private List<Employees> _filteredEmployees;

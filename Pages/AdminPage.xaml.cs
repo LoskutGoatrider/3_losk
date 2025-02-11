@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 namespace losk_3.Pages
 {
         /// <summary>
-        /// Логика взаимодействия для AdminPage.xaml
+        /// Этот код  для страницы, отображающей список сотрудников и позволяющей их редактировать или добавлять новых.
         /// </summary>
         public partial class AdminPage : Page
         {
@@ -32,7 +32,6 @@ namespace losk_3.Pages
                         LoadEmployees();
                         LoadJobTitles();
                 }
-
                 private void LoadEmployees()
                 {
                         _employees = Helper.GetContext().Employee.Select(e => new Employees
@@ -81,10 +80,10 @@ namespace losk_3.Pages
                         FilterEmployees();
                 }
 
-                private void FilterEmployees()  // Метод для фильтрации сотрудников
+                private void FilterEmployees()
                 {
-                        string searchText = tbSearch.Text.ToLower(); // Получаем текст из поля поиска и преобразуем его в нижний регистр
-                        string selectedJobTitle = cbJobTitle.SelectedItem as string; // Получаем выбранное значение должности из комбобокса
+                        string searchText = tbSearch.Text.ToLower();
+                        string selectedJobTitle = cbJobTitle.SelectedItem as string;
 
                         // Фильтрация списка сотрудников на основе текста поиска и выбранной должности
                         _filteredEmployees = _employees.Where(emp =>
@@ -96,7 +95,12 @@ namespace losk_3.Pages
                         EmployeesListView.ItemsSource = null;
                         EmployeesListView.ItemsSource = _filteredEmployees;
                 }
-
+                /// <summary>
+                /// Обработчик события двойного щелчка мыши по элементу в списке сотрудников (EmployeesListView).
+                /// Открывает страницу редактирования для выбранного сотрудника, если он существует в базе данных.
+                /// </summary>
+                /// <param name="sender">Объект, вызвавший событие (EmployeesListView).</param>
+                /// <param name="e">Аргументы события, содержащие информацию о событии двойного щелчка мыши.</param>
                 private void EmployeesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
                 {
                         if (EmployeesListView.SelectedItem is Employees selectedEmployee)
@@ -106,18 +110,18 @@ namespace losk_3.Pages
                                         int employeeId = int.Parse(selectedEmployee.ID);
 
                                         telecom_loskEntities db = Helper.GetContext();
-                                        
-                                                var employeeExists = db.Employee.Find(employeeId) != null;
 
-                                                if (employeeExists)
-                                                {
-                                                        NavigationService.Navigate(new EditEmployee(employeeId));
-                                                }
-                                                else
-                                                {
-                                                        MessageBox.Show($"Сотрудник с ID = {employeeId} не найден.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                                                }
-                                        
+                                        var employeeExists = db.Employee.Find(employeeId) != null;
+
+                                        if (employeeExists)
+                                        {
+                                                NavigationService.Navigate(new EditEmployee(employeeId));
+                                        }
+                                        else
+                                        {
+                                                MessageBox.Show($"Сотрудник с ID = {employeeId} не найден.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                                        }
+
                                 }
                                 catch (FormatException ex)
                                 {
@@ -135,5 +139,51 @@ namespace losk_3.Pages
                 {
                         LoadEmployees();
                 }
+                private void PrintEmployee_Click(object sender, RoutedEventArgs e)
+                {
+                        // Создаем экземпляр стандартного диалогового окна печати Windows
+                        PrintDialog printDialog = new PrintDialog();
+                        // Отображаем диалоговое окно печати и проверяем, нажал ли пользователь кнопку 
+                        if (printDialog.ShowDialog() == true)
+                        {
+                                FlowDocument docToPrint = new FlowDocument();
+                                foreach (var employee in _employees)
+                                {
+                                        var employeeBlock = new Paragraph();
+                                       //  объект Run для добавления текста в абзац
+                                        employeeBlock.Inlines.Add(new Run($"ФИО: {employee.FullName}\n"));
+                                        employeeBlock.Inlines.Add(new Run($"Должность: {employee.PositionAtWork}\n"));
+                                        employeeBlock.Inlines.Add(new Run($"Телефон: {employee.PhoneNumber}\n"));
+                                        docToPrint.Blocks.Add(employeeBlock);
+                                }
+
+                                IDocumentPaginatorSource idpSource = docToPrint;
+                                printDialog.PrintDocument(idpSource.DocumentPaginator, "Список сотрудников");
+                        }
+                }
+                private void PrintServices_Click(object sender, RoutedEventArgs e)
+                {
+                        telecom_loskEntities db = Helper.GetContext();
+                        // _servicesItems - это коллекция, содержащая данные об услугах
+                        var _servicesItems = db.Services.ToList();
+
+                                PrintDialog printDialog = new PrintDialog();
+                                if (printDialog.ShowDialog() == true)
+                                {
+                                        FlowDocument docToPrint = new FlowDocument();
+                                        foreach (var services in _servicesItems)
+                                        {
+                                                var servicesBlock = new Paragraph();
+                                                servicesBlock.Inlines.Add(new Run($"Название услуги: {services.ServiceName}\n"));
+                                                servicesBlock.Inlines.Add(new Run($"цена: {services.Price}\n"));
+                                                docToPrint.Blocks.Add(servicesBlock);
+                                        }
+
+                                        IDocumentPaginatorSource idpSource = docToPrint;
+                                        printDialog.PrintDocument(idpSource.DocumentPaginator, "Список услуг");
+                                }
+                        
+                }
+
         }
 }

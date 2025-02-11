@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="63d33a4aa3b34822b2aca2de348223de" Name="Diagram1">
+      <Diagram DiagramId="63d33a4aa3b34822b2aca2de348223de" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="telecom_loskModel.Employee" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="telecom_loskModel.Equipment" Width="1.5" PointX="8.75" PointY="9.25" IsExpanded="true" />
         <EntityTypeShape EntityType="telecom_loskModel.Gender" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />

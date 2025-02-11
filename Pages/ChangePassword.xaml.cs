@@ -19,7 +19,7 @@ using System.Windows.Threading;
 namespace losk_3.Pages
 {
         /// <summary>
-        /// Логика взаимодействия для ChangePassword.xaml
+        /// Этот код предоставляет основу для страницы изменения пароля. 
         /// </summary>
         public partial class ChangePassword : Page
         {

@@ -11,23 +11,28 @@ namespace losk_3.Services
 {
         internal class ConfirmationCode
         {
+                /// <summary>
+                /// Метод отправки электронного письма (email) с кодом подтверждения. 
+                /// </summary>
+                /// <param name="email"></param>
+                /// <returns></returns>
                 public string SendEmail(string email)
                 {
                         try
                         {
-                                MailAddress from = new MailAddress("accelerator697@mail.ru", "Loskut");
+
+                                
+                                MailAddress from = new MailAddress("accelerator697@mail.ru", "Loskut");    
                                 MailAddress to = new MailAddress(email);
                                 MailMessage message = new MailMessage(from, to);
                                 message.Subject = "Код подтверждения";
                                 string code = new Random().Next(100000, 999999).ToString();
                                 message.Body = $"Вот ваш код подтверждения: {code}, никому его не сообщайте";
                                 message.IsBodyHtml = true;
-
                                 SmtpClient smtp = new SmtpClient("smtp.mail.ru", 587);
                                 smtp.Credentials = new NetworkCredential("accelerator697@mail.ru", "agtXMVNCBdvTbTQSduuM");
                                 smtp.EnableSsl = true;
                                 smtp.Send(message);
-
                                 return code;
                         }
                         catch (SmtpException smtpEx)
