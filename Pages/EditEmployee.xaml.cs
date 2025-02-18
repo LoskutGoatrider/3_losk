@@ -174,6 +174,11 @@ namespace losk_3.Pages
                                 }
                         }
                 }
+                private void GenerateContractt_Click(object sender, RoutedEventArgs e)
+                {
+                        ContractGenerator laborContractGenerator = new ContractGenerator();
+                        laborContractGenerator.GenerateContract(_employee.ID);
+                }
         }
         
 }

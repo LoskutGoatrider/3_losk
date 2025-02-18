@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Xceed.Words.NET;
 
 namespace losk_3.Pages
 {
@@ -115,6 +116,6 @@ namespace losk_3.Pages
                         {
                                 MessageBox.Show($"Ошибка при добавлении сотрудника: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
-                }
+                }           
         }
 }
